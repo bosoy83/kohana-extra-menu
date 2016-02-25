@@ -3,7 +3,7 @@
 return array
 (
 	'extra-menu' => array(
-		'alias' => 'kubikrubik-extra-menu',
+		'alias' => 'greor-extra-menu',
 		'name' => 'Extra menu module',
 		'type' => Helper_Module::MODULE_HIDDEN,
 		'controller' => 'extra_menu'
