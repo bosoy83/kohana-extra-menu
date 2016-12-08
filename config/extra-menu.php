@@ -2,7 +2,7 @@
 
 return array(
 	'type' => array(
-		'footer' => __('Footer'),
+// 		'footer' => __('Footer'),
 	),
 	'properties' => array(),
 	'handlers' => array(),
