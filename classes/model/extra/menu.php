@@ -36,7 +36,7 @@ class Model_Extra_Menu extends ORM_Base {
 				array('max_length', array(':value', 255)),
 			),
 			'link' => array(
-				array('not_empty'),
+// 				array('not_empty'),
 				array('max_length', array(':value', 255)),
 			),
 			'target' => array(
