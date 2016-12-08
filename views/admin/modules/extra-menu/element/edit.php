@@ -56,6 +56,7 @@
 <?php
 					echo View_Admin::factory('modules/extra-menu/element/tab/main', array(
 						'helper_orm' => $helper_orm,
+						'handlers' => $handlers,
 						'errors' => $errors,
 					)); 
 ?>

@@ -5,6 +5,7 @@ CREATE TABLE `extra_menu` (
 	`link` VARCHAR(255) NOT NULL DEFAULT '',
 	`target` ENUM('_self','_blank','_modal') NOT NULL,
 	`type` VARCHAR(255) NOT NULL DEFAULT '',
+	`handler` VARCHAR(255) NOT NULL DEFAULT '',
 	`active` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
 	`for_all` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
 	`position` INT(10) UNSIGNED NOT NULL,

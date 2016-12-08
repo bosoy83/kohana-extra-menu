@@ -13,6 +13,8 @@ class Model_Extra_Menu extends ORM_Base {
 			'title' => 'Title',
 			'link' => 'Link',
 			'target' => 'Open link',
+			'type' => 'Type',
+			'handler' => 'Handler',
 			'active' => 'Active',
 			'position' => 'Position',
 			'for_all' => 'For all sites',
@@ -39,6 +41,12 @@ class Model_Extra_Menu extends ORM_Base {
 			),
 			'target' => array(
 				array('in_array', array(':value', array('_self', '_blank', '_modal'))),
+			),
+			'type' => array(
+				array('not_empty'),
+			),
+			'handler' => array(
+				array('max_length', array(':value', 255)),
 			),
 			'position' => array(
 				array('digit'),

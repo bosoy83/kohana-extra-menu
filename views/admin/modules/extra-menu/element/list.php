@@ -34,12 +34,6 @@
 		'id' => '{id}',
 		'query' => Helper_Page::make_query_string($query_array),
 	));
-	$view_tpl = Route::url('modules', array(
-		'controller' => $CONTROLLER_NAME['element'],
-		'action' => 'view',
-		'id' => '{id}',
-		'query' => Helper_Page::make_query_string($query_array),
-	));
 
 	$query_array['mode'] = 'show';
 	$visibility_on_tpl = Route::url('modules', array(
@@ -113,7 +107,16 @@
 					} else {
 						echo '<i class="icon-eye-open" style="background: none;"></i>&nbsp;';
 					}
-					echo HTML::chars($_orm->title);
+					
+					$_title = HTML::chars($_orm->title);
+					if ( ! empty($_orm->handler)) {
+						$_handler = Arr::get($handlers, $_orm->handler);
+						if ( ! empty($_handler)) {
+							$_title .= ' [<small><strong>'.HTML::chars($_handler).'</strong></small>]';
+						}
+					}
+					
+					echo $_title;
 ?>
 				</td>
 				<td>
@@ -148,11 +151,6 @@
 									'title' => __('Delete'),
 								)), '</li>';
 							echo '</ul>';
-						} else {
-							echo HTML::anchor(str_replace('{id}', $_orm->id, $view_tpl), '<i class="icon-file"></i> '.__('View'), array(
-								'class' => 'btn',
-								'title' => __('View'),
-							));
 						}
 					echo '</div>';
 ?>				

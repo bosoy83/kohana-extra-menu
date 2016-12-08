@@ -64,3 +64,18 @@
 			'class' => 'input-xxlarge',
 		)),
 	));
+	
+/**** handler ****/
+	
+	if ( ! empty($handlers)) {
+		echo View_Admin::factory('form/control', array(
+			'field' => 'handler',
+			'errors' => $errors,
+			'labels' => $labels,
+			'required' => $required,
+			'controls' => Form::select('handler', $handlers, $orm->handler, array(
+				'id' => 'target_field',
+				'class' => 'input-xxlarge',
+			)),
+		));
+	}

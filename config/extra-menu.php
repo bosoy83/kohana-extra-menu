@@ -5,4 +5,5 @@ return array(
 		'footer' => __('Footer'),
 	),
 	'properties' => array(),
+	'handlers' => array(),
 );

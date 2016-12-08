@@ -36,7 +36,8 @@ class Controller_Admin_Modules_Extra_Menu extends Controller_Admin_Modules_Extra
 			->set_filename('modules/extra-menu/element/list')
 			->set('list', $list)
 			->set('hided_list', $this->get_hided_list($orm->object_name()))
-			->set('paginator', $paginator);
+			->set('paginator', $paginator)
+			->set('handlers', $this->get_handlers());
 			
 		$this->left_menu_element_add();
 		$this->left_menu_element_fix($orm);
@@ -123,7 +124,8 @@ class Controller_Admin_Modules_Extra_Menu extends Controller_Admin_Modules_Extra
 				->set_filename('modules/extra-menu/element/edit')
 				->set('errors', $errors)
 				->set('helper_orm', $helper_orm)
-				->set('properties', $properties);
+				->set('properties', $properties)
+				->set('handlers', $this->get_handlers());
 			
 			$this->left_menu_element_add();
 		}
@@ -234,46 +236,13 @@ class Controller_Admin_Modules_Extra_Menu extends Controller_Admin_Modules_Extra
 			->redirect($this->back_url);
 	}
 	
-	public function action_view()
-	{
-		$request = $this->request->current();
-		$id = (int) $request->param('id');
-		$helper_orm = ORM_Helper::factory('extra_menu');
-		$orm = $helper_orm->orm();
-		$orm
-			->where('id', '=', $id)
-			->find();
-			
-		if ( ! $orm->loaded()) {
-			throw new HTTP_Exception_404();
-		}
-	
-		if (empty($this->back_url)) {
-			$query_array = array(
-				'type' => $this->type_code
-			);
-			$query_array = Paginator::query($request, $query_array);
-			$this->back_url = Route::url('modules', array(
-				'controller' => $this->controller_name['element'],
-				'query' => Helper_Page::make_query_string($query_array),
-			));
-		}
-	
-		$this->template
-			->set_filename('modules/extra-menu/element/view')
-			->set('helper_orm', $helper_orm);
-	
-		$this->title = __('Viewing');
-		$this->left_menu_element_add();
-	}
-	
 	protected function _get_breadcrumbs()
 	{
 		$breadcrumbs = parent::_get_breadcrumbs();
 		
 		$action = $this->request->current()
 			->action();
-		if (in_array($action, array('edit', 'view'))) {
+		if (in_array($action, array('edit'))) {
 			$id = (int) $this->request->current()->param('id');
 			$element_orm = ORM::factory('extra_menu')
 				->where('id', '=', $id)
@@ -282,9 +251,6 @@ class Controller_Admin_Modules_Extra_Menu extends Controller_Admin_Modules_Extra
 				switch ($action) {
 					case 'edit':
 						$_str = ' ['.__('edition').']';
-						break;
-					case 'view':
-						$_str = ' ['.__('viewing').']';
 						break;
 					default:
 						$_str = '';
@@ -303,4 +269,13 @@ class Controller_Admin_Modules_Extra_Menu extends Controller_Admin_Modules_Extra
 		return $breadcrumbs;
 	}
 	
+
+	private function get_handlers()
+	{
+		$handlers = Kohana::$config->load('extra-menu.handlers');
+		
+		return array(
+			'' => __('-- handler --')
+		) + Arr::pluck($handlers, 'title', TRUE);
+	}
 } 
