@@ -12,13 +12,17 @@ class Extra_Menu {
 			->find_all();
 			
 		$result = array();
+		$helper_orm = ORM_Helper::factory('Extra_Menu');
 		foreach ($list as $_orm) {
+			$helper_orm->orm($_orm);
 			$_item = array(
+				'id' => $_orm->id,
 				'title' => $_orm->title,
 				'target' => $_orm->target,
 				'handler' => $_orm->handler,
-				'sub' => array(),
 				'link' => $_orm->link,
+				'properties' => $helper_orm->property_list(),
+				'sub' => array(),
 			);
 			
 			if (($_getter = Arr::path($handlers, $_orm->handler.'.instance')) AND is_callable($_getter)) {
